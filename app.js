@@ -112,7 +112,7 @@ if (statPairs) {
                     try {
                         devindx = findDevIndex(device.data.capabilities, 'devices.capabilities.on_off')
                         device.data.capabilities[devindx].state.instance = statPairs[matchedDeviceId].topicType;
-                        device.data.capabilities[devindx].state.value = ['on', '1', 'true'].includes(message.toString().toLowerCase());
+                        device.data.capabilities[devindx].state.value = ['on', '1', 'true', 'online'].includes(message.toString().toLowerCase());
                     } catch (err) {
                         console.log(err);
                     }
@@ -130,7 +130,13 @@ if (statPairs) {
                     try {
                         devindx = findDevIndex(device.data.capabilities, 'devices.capabilities.color_setting')
                         device.data.capabilities[devindx].state.instance = statPairs[matchedDeviceId].topicType;
-                        device.data.capabilities[devindx].state.value = JSON.parse(message);
+                        const messageString = message.toString('utf8');
+                        if (messageString.indexOf('#') === 0) {
+                            // read hex representation of the color
+                            device.data.capabilities[devindx].state.value = parseInt(messageString.substring(1), 16);
+                        } else {
+                            device.data.capabilities[devindx].state.value = JSON.parse(message);
+                        }
                     } catch (err) {
                         console.log(err);
                     }
@@ -139,7 +145,13 @@ if (statPairs) {
                     try {
                         devindx = findDevIndex(device.data.capabilities, 'devices.capabilities.color_setting')
                         device.data.capabilities[devindx].state.instance = statPairs[matchedDeviceId].topicType;
-                        device.data.capabilities[devindx].state.value = JSON.parse(message);
+                        const messageString = message.toString('utf8');
+                        if (messageString.indexOf('#') === 0) {
+                            // read hex representation of the color
+                            device.data.capabilities[devindx].state.value = parseInt(messageString.substring(1), 16);
+                        } else {
+                            device.data.capabilities[devindx].state.value = JSON.parse(message);
+                        }
                     } catch (err) {
                         console.log(err);
                     }
