@@ -189,7 +189,7 @@ if (statPairs) {
                     try {
                         devindx = findDevIndex(device.data.capabilities, 'devices.capabilities.range')
                         device.data.capabilities[devindx].state.instance = statPairs[matchedDeviceId].topicType;
-                        const readValue = JSON.parse(message);
+                        let readValue = JSON.parse(message);
                         if (statPairs[matchedDeviceId].maxRange) {
                             readValue = readValue * 100 / statPairs[matchedDeviceId].maxRange;   
                         }
