@@ -69,7 +69,8 @@ module.exports.action = [
         var capabilities = global.devices[id].setState(request.body.payload.devices[i].capabilities[0].state.value , request.body.payload.devices[i].capabilities[0].type, request.body.payload.devices[i].capabilities[0].state.instance);
            
     } catch (err) {
-
+        console.log(err);
+        console.log('Going to mute');
         var capabilities = global.devices[id].setState(true , request.body.payload.devices[i].capabilities[0].type, 'mute');
     }
     

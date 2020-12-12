@@ -64,7 +64,7 @@ class device {
           break;
       case 'brightness':
             try {
-              const maxRange = this.data.custom_data.mqtt.maxRange;
+              const maxRange = this.data.custom_data.mqtt[this.findDevIndex(this.data.custom_data.mqtt, inst)].maxRange;
               if (maxRange) {
                 int = val * maxRange / 100;
               } else {
