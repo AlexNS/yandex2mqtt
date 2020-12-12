@@ -14,14 +14,8 @@ const mqtt = require('mqtt');
 const device = require('./device');
 const fs = require('fs');
 const app = express();
-const https = require('https');
-const privateKey = fs.readFileSync(config.https.privateKey, 'utf8');
-const certificate = fs.readFileSync(config.https.certificate, 'utf8');
-const credentials = {
-    key: privateKey,
-    cert: certificate
-};
-const httpsServer = https.createServer(credentials, app);
+const http = require('http');
+const httpServer = http.createServer(app);
 global.devices = [];
 
 if (config.devices) {
@@ -74,7 +68,7 @@ app.get('/provider/v1.0/user/devices', routes.user.devices);
 app.post('/provider/v1.0/user/devices/query', routes.user.query);
 app.post('/provider/v1.0/user/devices/action', routes.user.action);
 app.post('/provider/v1.0/user/unlink', routes.user.unlink);
-httpsServer.listen(config.https.port);
+httpServer.listen(config.https.port);
 
 
 function findDevIndex(arr, elem) {
