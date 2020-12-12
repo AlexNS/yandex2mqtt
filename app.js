@@ -191,7 +191,7 @@ if (statPairs) {
                         device.data.capabilities[devindx].state.instance = statPairs[matchedDeviceId].topicType;
                         let readValue = JSON.parse(message);
                         if (statPairs[matchedDeviceId].maxRange) {
-                            readValue = readValue * 100 / statPairs[matchedDeviceId].maxRange;   
+                            readValue = (readValue * 100 / statPairs[matchedDeviceId].maxRange) | 0;   
                         }
                         device.data.capabilities[devindx].state.value = readValue;
                     } catch (err) {

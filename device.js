@@ -66,7 +66,7 @@ class device {
             try {
               const maxRange = this.data.custom_data.mqtt[this.findDevIndex(this.data.custom_data.mqtt, inst)].maxRange;
               if (maxRange) {
-                int = val * maxRange / 100;
+                int = (val * maxRange / 100) | 0;
               } else {
                 int = val;
               }
