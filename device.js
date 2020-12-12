@@ -44,24 +44,24 @@ class device {
             this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.instance = inst;
             this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.value = val;
             topic = this.data.custom_data.mqtt[this.findDevIndex(this.data.custom_data.mqtt, inst)].set || false;
-            break; 
           } 
           catch (err) {              
             topic = false;
             console.log(err);
           }
+          break;
       case 'mute':
           try {
             int = val ? '1' : '0';
             this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.instance = inst;
             this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.value = val;
             topic = this.data.custom_data.mqtt[this.findDevIndex(this.data.custom_data.mqtt, inst)].set || false;
-            break; 
           } 
           catch (err) {              
             topic = false;
             console.log(err);
           }
+          break;
       case 'brightness':
             try {
               const maxRange = this.data.custom_data.mqtt.maxRange;
@@ -73,12 +73,12 @@ class device {
               this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.instance = inst;
               this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.value = val;
               topic = this.data.custom_data.mqtt[this.findDevIndex(this.data.custom_data.mqtt, inst)].set || false;
-              break; 
             } 
             catch (err) {              
               topic = false;
               console.log(err);
-            }          
+            }
+            break;          
       default:
           try {
             int = JSON.stringify(val);
