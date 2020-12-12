@@ -70,6 +70,7 @@ class device {
               } else {
                 int = val;
               }
+              int = JSON.stringify(int);
               this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.instance = inst;
               this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.value = val;
               topic = this.data.custom_data.mqtt[this.findDevIndex(this.data.custom_data.mqtt, inst)].set || false;
