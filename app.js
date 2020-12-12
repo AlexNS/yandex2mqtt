@@ -88,11 +88,13 @@ global.devices.forEach(device => {
     device.data.custom_data.mqtt.forEach(mqtt => {
         const statType = mqtt.type || false;
         const statTopic = mqtt.stat || false;
+        const maxRange = mqtt.maxRange || 100;
         if (statTopic && statType) {
             statPairs.push({
                 deviceId: device.data.id,
                 topic: statTopic,
-                topicType: statType
+                topicType: statType,
+                maxRange: maxRange
             });
         }
     });
@@ -187,7 +189,11 @@ if (statPairs) {
                     try {
                         devindx = findDevIndex(device.data.capabilities, 'devices.capabilities.range')
                         device.data.capabilities[devindx].state.instance = statPairs[matchedDeviceId].topicType;
-                        device.data.capabilities[devindx].state.value = JSON.parse(message);
+                        const readValue = JSON.parse(message);
+                        if (statPairs[matchedDeviceId].maxRange) {
+                            readValue = readValue * 100 / statPairs[matchedDeviceId].maxRange;   
+                        }
+                        device.data.capabilities[devindx].state.value = readValue;
                     } catch (err) {
                         console.log(err);
                     }

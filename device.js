@@ -36,7 +36,11 @@ class device {
     switch (inst) {
       case 'on':
           try {
-            int = val ? '1' : '0';
+            if (this.data.custom_data.mqtt.useOnOff) {
+              int = val ? 'ON' : 'OFF';
+            } else {
+              int = val ? '1' : '0';
+            }
             this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.instance = inst;
             this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.value = val;
             topic = this.data.custom_data.mqtt[this.findDevIndex(this.data.custom_data.mqtt, inst)].set || false;
@@ -57,7 +61,24 @@ class device {
           catch (err) {              
             topic = false;
             console.log(err);
-          }          
+          }
+      case 'brightness':
+            try {
+              const maxRange = this.data.custom_data.mqtt.maxRange;
+              if (maxRange) {
+                int = val * maxRange / 100;
+              } else {
+                int = val;
+              }
+              this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.instance = inst;
+              this.data.capabilities[this.findDevIndex(this.data.capabilities, type)].state.value = val;
+              topic = this.data.custom_data.mqtt[this.findDevIndex(this.data.custom_data.mqtt, inst)].set || false;
+              break; 
+            } 
+            catch (err) {              
+              topic = false;
+              console.log(err);
+            }          
       default:
           try {
             int = JSON.stringify(val);
